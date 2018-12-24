@@ -1,0 +1,5 @@
+{
+  "name" : "aergo-contract-ex/fixedtoken",
+  "source" : "src/fixedtoken.lua",
+  "target" : "fixedtoken.lua"
+}

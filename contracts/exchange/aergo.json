@@ -1,0 +1,5 @@
+{
+  "name" : "aergo-contract-ex/exchange",
+  "source" : "src/exchange.lua",
+  "target" : "exchange.lua"
+}

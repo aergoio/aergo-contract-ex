@@ -1,0 +1,39 @@
+reset
+
+# create test accounts
+# contractOwner = Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik
+inject contractOwner 1000
+# exchangeCtr = Amgom5NMBdYXuSAEQoNuBNZSyMNu6JdQA2JHJsix7EEXikCphdnV
+inject exchangeCtr 1000
+
+# addr1 = AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP
+inject addr1 1000
+
+
+# initialize
+# deploy token contract
+deploy contractOwner 0 tokenCtr ../../fixedtoken/fixedtoken.lua
+
+# charge token to contract
+call contractOwner 0 tokenCtr transfer `["Amgom5NMBdYXuSAEQoNuBNZSyMNu6JdQA2JHJsix7EEXikCphdnV", 500]`
+
+# deploy exchange contract
+deploy contractOwner 0 exchangeCtr ../exchange.lua `["AmgcK7ArJUGw8qsKAJvk9F1ZEP5uvD1hkVMmSrP6u4ZHUNocY1st"]`
+
+
+# test
+# exchange aergo -> token
+call addr1 500 exchangeCtr aergo2token
+
+# check addr1's token balance
+query tokenCtr balanceOf `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"500"}`
+
+# exchange aergo -> token
+call addr1 100 tokenCtr approveAndCall `["Amgom5NMBdYXuSAEQoNuBNZSyMNu6JdQA2JHJsix7EEXikCphdnV", 300, "token2aergo"]`
+
+
+# check status
+# addr1's token = 200
+query tokenCtr balanceOf `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"200"}`
+# exchangeCtr's token = 200
+query tokenCtr balanceOf `["Amgom5NMBdYXuSAEQoNuBNZSyMNu6JdQA2JHJsix7EEXikCphdnV"]` `{"_bignum":"300"}`

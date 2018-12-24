@@ -1,0 +1,5 @@
+{
+  "name" : "aergo-contract-ex/address",
+  "source" : "src/address.lua",
+  "target" : "address.lua"
+}

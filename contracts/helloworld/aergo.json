@@ -1,0 +1,5 @@
+{
+  "name" : "aergo-contract-ex/helloworld",
+  "source" : "src/helloworld.lua",
+  "target" : "helloworld.lua"
+}

@@ -1,0 +1,5 @@
+{
+  "name" : "aergo-contract-ex/object",
+  "source" : "src/object.lua",
+  "target" : "object.lua"
+}

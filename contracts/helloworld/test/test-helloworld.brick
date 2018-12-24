@@ -1,0 +1,16 @@
+# ref https://github.com/aergoio/aergo/wiki/getting-started_smart-contract
+reset
+
+inject contractOwner 1000
+
+# deploy (internally compile & get abi)
+deploy contractOwner 0 helloCtr ../src/helloworld.lua
+
+# query initial state
+query helloCtr hello `[]` `"hello world"`
+
+# call contract. change name; world -> aergo
+call contractOwner 0 helloCtr set_name `["aergo"]`
+
+# query changed state
+query helloCtr hello `[]` `"hello aergo"`

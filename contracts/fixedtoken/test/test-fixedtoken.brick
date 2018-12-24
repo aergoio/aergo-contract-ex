@@ -1,0 +1,32 @@
+reset
+
+# create test accounts
+# contractOwner = Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik
+inject contractOwner 1000
+
+# addr1 = AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP
+inject addr1 1000
+
+# addr2 = AmhQGGLRCwSuiKb7Q7FLBGGozp8rkWB6cTotuxHdtYp5wC5Rmg1Y=
+inject addr2 1000
+
+# initialize
+# deploy token contract
+deploy contractOwner 0 tokenCtr ../fixedtoken.lua
+
+# transfer test
+call contractOwner 0 tokenCtr transfer `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP", 500]`
+query tokenCtr balanceOf `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"500"}`
+call contractOwner 0 tokenCtr transfer `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP", 1500]`
+query tokenCtr balanceOf `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"2000"}`
+
+
+# contractOwner approves 300 aer to addr1
+call contractOwner 0 tokenCtr approve `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP", 300]`
+query tokenCtr allowance `["Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik", "AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"300"}`
+
+# addr1 use contractOwner's balance
+call addr1 0 tokenCtr transferFrom `["Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik", "AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP", 200]`
+query tokenCtr allowance `["Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik", "AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"100"}`
+call addr1 0 tokenCtr transferFrom `["Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik", "AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP", 100]`
+query tokenCtr allowance `["Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik", "AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"0"}`

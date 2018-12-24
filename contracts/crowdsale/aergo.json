@@ -1,0 +1,5 @@
+{
+  "name" : "aergo-contract-ex/crowdsale",
+  "source" : "src/sample/mycrowdsale.lua",
+  "target" : "mycrowdsale.lua"
+}

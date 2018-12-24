@@ -1,0 +1,38 @@
+reset
+
+# admin's address = Amh1WQR23gRVNBvsqus5gSG5naSnmz71UB38Nc7VeWGM9bjtF3VL
+# participant1 = AmgbvsygiM7oPtWxjT2LswvByoEjFXnabPAEeog7vqRFEW7MFk6Y
+# participant2 = AmhYTRqqgd23hu9ecJbde8QdvXYicEnAFZk5VQc3WAo7LGuH8NPV
+# participant3 = Amht7EKSWNWfpQ34az3HDuzXN4TioxvAqJAscP1Nc5QMPtS1b8f7
+inject admin 100
+inject participant1 100
+inject participant2 100
+inject participant3 100
+
+# tokenCtr's address = AmgcK7ArJUGw8qsKAJvk9F1ZEP5uvD1hkVMmSrP6u4ZHUNocY1st
+deploy admin 0 tokenCtr ../../fixedtoken/fixedtoken.lua
+
+# mycrowdsaleCtr's address = AmgimLw3V1nqcvxKW9sozrEgRqxPtp5z4ArbpVQv6mFy9rdhNf5a
+# deploy mycrowdsale contract. parameter = `[startTime, endTime, rate, cap, collectorAddr, tokenAddr]`
+deploy admin 0 mycrowdsaleCtr ../mycrowdsale.lua `[7, 10, 100, 100, "Amh1WQR23gRVNBvsqus5gSG5naSnmz71UB38Nc7VeWGM9bjtF3VL", "AmgcK7ArJUGw8qsKAJvk9F1ZEP5uvD1hkVMmSrP6u4ZHUNocY1st"]`
+
+# transfer all token to contract
+call admin 0 tokenCtr transfer `["AmgimLw3V1nqcvxKW9sozrEgRqxPtp5z4ArbpVQv6mFy9rdhNf5a", 5000000000000000000]`
+
+# buy tokens
+call participant1 50 mycrowdsaleCtr default
+query tokenCtr balanceOf `["AmgbvsygiM7oPtWxjT2LswvByoEjFXnabPAEeog7vqRFEW7MFk6Y"]` `{"_bignum":"5000"}` 
+
+call participant2 30 mycrowdsaleCtr default
+query tokenCtr balanceOf `["AmhYTRqqgd23hu9ecJbde8QdvXYicEnAFZk5VQc3WAo7LGuH8NPV"]` `{"_bignum":"3000"}`
+
+call participant2 20 mycrowdsaleCtr default
+query tokenCtr balanceOf `["AmhYTRqqgd23hu9ecJbde8QdvXYicEnAFZk5VQc3WAo7LGuH8NPV"]` `{"_bignum":"5000"}`
+
+# buy additional token
+query mycrowdsaleCtr raised `[]` `{"_bignum":"100"}`
+query mycrowdsaleCtr cap `[]` `{"_bignum":"100"}`
+query mycrowdsaleCtr capReached `[]` `true`
+
+# this will be failed; cap aleady reach
+call participant2 20 mycrowdsaleCtr default `[]` `reach cap`

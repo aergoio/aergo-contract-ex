@@ -1,0 +1,6 @@
+{
+  "name" : "aergo-contract-ex/safemath",
+  "source" : "src/safemath.lua",
+  "target" : "safemath.lua",
+  "tests": [ "test/ship-safemath.lua" ]
+}
