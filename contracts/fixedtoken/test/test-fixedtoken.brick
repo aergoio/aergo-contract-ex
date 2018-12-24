@@ -20,7 +20,6 @@ query tokenCtr balanceOf `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP
 call contractOwner 0 tokenCtr transfer `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP", 1500]`
 query tokenCtr balanceOf `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"2000"}`
 
-
 # contractOwner approves 300 aer to addr1
 call contractOwner 0 tokenCtr approve `["AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP", 300]`
 query tokenCtr allowance `["Amga6g1TiZxcmcZPYuL3b4mrkB4o25wwahmrn6H3d5M8jXshdMik", "AmhGP5cQxcisR9NMRKRuyRqz5Syk9Xo9qsUN9q1rTDfdFrMQaKZP"]` `{"_bignum":"300"}`

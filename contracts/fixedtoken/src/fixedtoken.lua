@@ -22,6 +22,7 @@ function constructor()
 
     TotalSupply:set(total)
     Book[system.getCreator()] = total
+    Book[address.nilAddress()] = bignum.number(0)
 
     system.print("create fixed token successfully. owner: " .. system.getCreator())
 end

@@ -7,24 +7,19 @@ require "mycrowdsale"
 local suite = TestSuite('test suite for mycrowdsale.lua')
 
 suite:add(TestCase('test buyTokens', function()
-    local _tokenAddr = "token_address"
+    local _tokenAddr = "AmgcK7ArJUGw8qsKAJvk9F1ZEP5uvD1hkVMmSrP6u4ZHUNocY1st"
     local _sender = "AmhUthrLULUMee46RDcfmBfajd3CK7Lpbgds7xRsAQoLpY32BcFK"
-    local _collector = "aergo collector"
-    -- set internal parameters
-    mycrowdsale.rate:set(5)
-    mycrowdsale.token:set(_tokenAddr)
-    mycrowdsale.collector:set(_collector)
+    local _collector = "Amh1WQR23gRVNBvsqus5gSG5naSnmz71UB38Nc7VeWGM9bjtF3VL"
     
-    local function reset() 
-        mycrowdsale.rate:set(0)
-        mycrowdsale.token:set('')
-        mycrowdsale.collector:set('')
-    end
+    function system.getBlockheight() return 0 end
+    
+    -- set internal parameters
+    constructor(0, 99999, 5, 99999, _collector, _tokenAddr)
 
     -- set mockup function
     function system.getSender() return _sender end
     function system.getAmount() return 10000 end
-
+    
     -- check token transfer
     function contract.call(tokenAddress, functionName, buyer, amount) 
         assertEquals(tokenAddress, _tokenAddr)
@@ -38,9 +33,8 @@ suite:add(TestCase('test buyTokens', function()
         assertEquals(amount, 10000)
     end
 
-    payable()
+    default()
     
-    reset() 
     end))
 
 suite:add(TestCase('test _preValidatePurchase when reach cap', function()

@@ -135,6 +135,8 @@ system = {
 
 abi = {
     register = function (funcname, ...)
+    end,
+    payable = function (funcname, ...)
     end
 }
 
@@ -240,6 +242,19 @@ end
 
 function state.array(len)
     return { _type_ = "array", _len_ = len, length = state.array_length, ipairs = state.array_ipairs }
+end
+
+bignum = {}
+
+function bignum.number(n)
+  return tonumber(n)
+end
+
+function bignum.compare(n1, n2)
+  if n1 > n2 then return 1 end
+  if n1 < n2 then return -1 end
+  
+  return 0 
 end
 
 --------------------------------------------------------------
