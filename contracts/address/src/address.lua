@@ -15,7 +15,7 @@ function address.isValidAddress(address)
     return false
   end
 
-  -- check lenght is in range
+  -- check length is in range
   if 52 ~= string.len(address) then
     return false
   end

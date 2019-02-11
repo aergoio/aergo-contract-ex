@@ -22,6 +22,7 @@ suite:add(TestCase('test sub abnormal', function()
 
 suite:add(TestCase('test mul', function()
       assertEquals(14, safemath.mul(7, 2))
+      assertEquals(0, safemath.mul(0, 5))
     end))
 
 suite:add(TestCase('test mul abnormal', function()
@@ -31,11 +32,16 @@ suite:add(TestCase('test mul abnormal', function()
       end
       local ret, data = pcall(function() safemath.mul(biggestNum, 2) end)
       assertFalse(ret)
-
+      
     end))
 
 suite:add(TestCase('test div', function()
       assertEquals(5, safemath.div(10, 2))
+    end))
+
+suite:add(TestCase('test div abnormal', function()
+      local ret, data = pcall(function() safemath.div(3, 0) end)
+      assertFalse(ret)
     end))
 
 suite:run()
