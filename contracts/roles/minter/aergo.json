@@ -1,0 +1,5 @@
+{
+  "name" : "aergo-contract-ex/roles/minter",
+  "source" : "src/minterRole.lua",
+  "target" : "target/out.lua"
+}

@@ -1,0 +1,8 @@
+reset
+
+# create account
+# AmgXAhYMSwQKo2Cgm5AaErEQBBPW66vnFagMd2fn7nry92TfMZuG
+inject owner 1000
+
+# deploy token contract
+deploy owner 0 mytoken ../target/out.lua `[]`

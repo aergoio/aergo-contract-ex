@@ -4,10 +4,13 @@ buildSeq=(
     'safemath'  
     'address'
     'object'
+    'typecheck'
+    'roles/minter'
     'helloworld'
     'fixedtoken'
     'exchange'
     'crowdsale'
+    'token'
 )
 
 ROOTDIR="$(dirname ${BASH_SOURCE[0]})"

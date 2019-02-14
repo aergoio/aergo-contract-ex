@@ -1,0 +1,13 @@
+reset
+
+inject owner 100
+
+deploy owner 0 sql ../src/sqlwrapper.lua `["create table if not exists customer(id integer, passwd text, name text, birth text, mobile text)"]`
+
+call owner 0 sql execute `["insert into customer values (1, 'passwd1', 'john', '20101231', '01012345678')"]`
+
+call owner 0 sql execute `["insert into customer values (2, 'passwd2', 'david', '20101031', '01077778888')"]`
+
+query sql query `["select * from customer where id like '%1'"]`
+
+query sql query `["select * from customer"]`

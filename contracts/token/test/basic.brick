@@ -1,0 +1,57 @@
+# call init.lua
+batch ./init.brick
+
+# AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f
+inject acc1 0
+# AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz
+inject acc2 0
+
+# check total supply
+query mytoken totalSupply `[]` `{"_bignum":"500000000000000000000000000"}`
+
+# check initial balance
+query mytoken balanceOf `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f"]` `{"_bignum":"0"}`
+query mytoken balanceOf `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]` `{"_bignum":"0"}`
+# query mytoken balanceOf `["AmhTjQ3Z8Ur36aU5i8bQBmZhxM1dHiLZU5me8ZqShpgeszMTQ7D3"]` `{"_bignum":"0"}`
+
+# ======== TRANSFER TEST ========
+# transfer owner -> acc1
+call owner 0 mytoken transfer `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", {"_bignum":"1000000000000000000"}]`
+query mytoken balanceOf `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f"]` `{"_bignum":"1000000000000000000"}`
+
+# transfer owner -> acc2
+call owner 0 mytoken transfer `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", {"_bignum":"1000000000000000000"}]`
+query mytoken balanceOf `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]` `{"_bignum":"1000000000000000000"}`
+
+# test invalid data format
+call acc1 0 mytoken transfer `["invalidaddress", 100]` `invalid address lenght`
+call acc1 0 mytoken transfer `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", 100]` `invalid bignum format`
+
+# test not enough balance
+call acc1 0 mytoken transfer `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", {"_bignum":"2000000000000000000"}]` `not enough balance`
+
+# test minors value
+call acc1 0 mytoken transfer `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", {"_bignum":"-1"}]` `transfer value must be bigger than 0`
+
+# ======== APPROVE & TRANSFER FROM TEST ========
+# check allowance & approve & transferFrom
+# check allowance of acc1->acc2 
+query mytoken allowance `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", "AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]` `{"_bignum":"0"}`
+
+# transferFrom fail test
+call acc2 0 mytoken transferFrom `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", "AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", {"_bignum":"100000"}]` `not enough allowed balance`
+
+# increase approve
+call acc1 0 mytoken approve `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", {"_bignum":"1000000000000000000"}]`
+query mytoken allowance `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", "AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]` `{"_bignum":"1000000000000000000"}`
+
+# test transferfrom; acc2 withdraw acc1's balance
+call acc2 0 mytoken transferFrom `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", "AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", {"_bignum":"500000000000000000"}]`
+query mytoken allowance `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", "AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]` `{"_bignum":"500000000000000000"}`
+query mytoken balanceOf `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f"]` `{"_bignum":"500000000000000000"}`
+query mytoken balanceOf `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]` `{"_bignum":"1500000000000000000"}`
+
+
+call acc1 0 mytoken approve `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", {"_bignum":"-1000000000000000000"}]`
+
+query mytoken allowance `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", "AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]`

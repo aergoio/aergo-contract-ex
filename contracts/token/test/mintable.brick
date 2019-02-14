@@ -1,0 +1,17 @@
+# call init.lua
+batch ./init.brick
+
+# check original balance of acc1
+query mytoken balanceOf `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f"]` `{"_bignum":"0"}`
+
+# mint token uinsg owner
+call owner 0 mytoken mint `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", {"_bignum":"5000"}]`
+
+# check changed balance of acc1
+query mytoken balanceOf `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f"]` `{"_bignum":"5000"}`
+
+# fail test mint 0 
+call owner 0 mytoken mint `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", {"_bignum":"0"}]` `mint value must be bigger than 0`
+
+# fail test; mint token uinsg unauthorized account
+call acc1 0 mytoken mint `["AmhK5CmiyExHCr17HhPRYMdpfriwAZ4PTxrCPiFLiMj8Yq7oWU3f", {"_bignum":"1"}]` `minter only`

@@ -1,0 +1,12 @@
+# call init.lua
+batch ./init.brick
+
+# test token name
+query mytoken name `[]` `"mytoken"`
+
+# test symbol name
+query mytoken symbol `[]` `"mt"`
+
+# test decimals
+
+query mytoken decimals `[]` `18`
