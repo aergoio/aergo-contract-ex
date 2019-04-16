@@ -62,7 +62,11 @@ end
 
 function TestCase:run()
   TestReporter.startTest(self.name)
-  local result, err = pcall(self.runnable)
+  if debug.traceback then
+    result, err = xpcall(self.runnable, debug.traceback)
+  else
+    result, err = pcall(self.runnable)
+  end
   if self.error then
     if err then
       local handledResult = self.error(err)

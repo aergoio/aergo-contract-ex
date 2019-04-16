@@ -24,7 +24,7 @@ call owner 0 mytoken transfer `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2N
 query mytoken balanceOf `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz"]` `{"_bignum":"1000000000000000000"}`
 
 # test invalid data format
-call acc1 0 mytoken transfer `["invalidaddress", 100]` `invalid address lenght`
+call acc1 0 mytoken transfer `["invalidaddress", 100]` `invalid address length`
 call acc1 0 mytoken transfer `["AmhTBHAL7wdH4TCSpxeVujrHo1RGUDAxSsj4PMJfWb6dA2NwBgBz", 100]` `invalid bignum format`
 
 # test not enough balance

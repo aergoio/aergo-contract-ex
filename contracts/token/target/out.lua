@@ -37,7 +37,7 @@ function typecheck(...)
     
     if (x and f == 'address') then
       -- check address length
-      assert(52 == #x, string.format("invalid address lenght: %s (%s)", x, #x))
+      assert(52 == #x, string.format("invalid address length: %s (%s)", x, #x))
       -- check character
       invalidChar = string.match(x, '[^123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]')
       assert(nil == invalidChar,
