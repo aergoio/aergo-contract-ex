@@ -23,4 +23,4 @@ So we create and provide generally and frequently used libraries and some exampl
 
 this project build (or attach) sources using ship https://github.com/aergoio/ship
 
-to build and publish all project to local ship repository, run `./scripts/deploy.sh`
+to build and publish all project to local ship repository, run `./scripts/publish.sh`
