@@ -11,21 +11,20 @@ function typecheck(...)
   local types = {...}
   
   local function check(x, f)
-    local typeStr = type(x)
-    
     if (x and f == 'address') then
+      assert(type(x) == 'string', "address must be string type") 
       -- check address length
       assert(52 == #x, string.format("invalid address length: %s (%s)", x, #x))
       -- check character
-      invalidChar = string.match(x, '[^123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]')
+      local invalidChar = string.match(x, '[^123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]')
       assert(nil == invalidChar,
-        string.format("invalid address format: %s contains invalid char %s", x, invalidChar))
+        string.format("invalid address format: %s contains invalid char %s", x, invalidChar or 'nil'))
     elseif (x and f == 'bignum') then
       -- check bignum
-      assert(bignum.isbignum(x), string.format("invalid %s format: %s (type = %s)", f, x, type(x)))
+      assert(bignum.isbignum(x), string.format("invalid format: %s != %s", type(x), f))
     else
       -- check default lua types
-      assert(type(x) == f, string.format("invalid %s format: %s (type = %s)", f, x, type(x)))
+      assert(type(x) == f, string.format("invalid format: %s != %s", type(x), f or 'nil'))
     end
   end
   
