@@ -18,6 +18,7 @@ So we create and provide generally and frequently used libraries and some exampl
 * crowdsale: Using the object library, we provide a reusable crowdsale contract.
 * sqlwrapper: It is a simple contract that can execute and query SQL to blockchain directly.
 * token: It is a token contract referring to erc20. It can be combined with the object library depending on the usage. We also used the typecheck library to rigorously check the type and reduce the exception cases.
+* flash_loan: Borrow tokens without any collateral by paying on the same transaction.
 
 ## Build and Publish using Ship
 
