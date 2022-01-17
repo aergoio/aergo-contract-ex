@@ -77,14 +77,15 @@ function withdraw()
   -- calculate the amount for this user
   local amount = balance * user_shares / total_shares
 
-  -- send the funds to the investor
-  contract.send(address, amount)
-
   -- delete its participation
   depositors:delete(address)
 
   -- update the total number of shares
   loan_shares:set(total_shares - user_shares)
+
+  -- must be last to avoid re-entrancy attack
+  -- send the funds to the investor
+  contract.send(address, amount)
 
 end
 
